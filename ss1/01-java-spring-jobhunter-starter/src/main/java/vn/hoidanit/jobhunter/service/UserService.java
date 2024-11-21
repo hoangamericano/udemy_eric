@@ -43,4 +43,10 @@ public class UserService {
         throw new UnsupportedOperationException("Unimplemented method 'handleDeleteUser'");
     }
 
+    public User handleGetUserByUsername(String username) {
+        // TODO Auto-generated method stub
+        return this.userRepository.findByEmail(username);
+
+    }
+
 }

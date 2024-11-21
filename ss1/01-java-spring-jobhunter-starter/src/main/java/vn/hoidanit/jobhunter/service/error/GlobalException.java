@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.util.error;
+package vn.hoidanit.jobhunter.service.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
