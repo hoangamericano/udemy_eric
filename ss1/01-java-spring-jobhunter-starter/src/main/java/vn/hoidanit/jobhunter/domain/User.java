@@ -1,5 +1,9 @@
 package vn.hoidanit.jobhunter.domain;
 
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +33,10 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String email2, String password2, List<SimpleGrantedAuthority> singletonList) {
+        // TODO Auto-generated constructor stub
     }
 
     public Integer getId() {

@@ -38,9 +38,9 @@ public class UserService {
 
     public void handleDeleteUser(Integer id) {
         // TODO Auto-generated method stub
-        this.userRepository.deleteById(id);
+        User user = this.fetchAllUserById(id);
+        this.userRepository.deleteById(user.getId());
 
-        throw new UnsupportedOperationException("Unimplemented method 'handleDeleteUser'");
     }
 
     public User handleGetUserByUsername(String username) {

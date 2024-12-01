@@ -27,7 +27,7 @@ public class FormatRestResponse implements ResponseBodyAdvice {
     @Override
     @Nullable
     public Object beforeBodyWrite(
-            @Nullable Object body,
+            Object body,
             MethodParameter returnType,
             MediaType selectedContentType,
             Class selectedConverterType,
@@ -45,8 +45,13 @@ public class FormatRestResponse implements ResponseBodyAdvice {
         // return body;
         // }
         if (status >= 400) {
+            res.setStatusCode(status);
+            res.setError(res.toString());
+            String message = (String) res.getData();
+            res.setData(body);
             return res;
         } else {
+            res.setStatusCode(status);
             res.setData(body);
             res.setMessage("Call api success");
         }
