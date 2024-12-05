@@ -31,7 +31,7 @@ public class SecurityConfiguration {
     @Value("${hoidanit.jwt.base64-secret}")
     private String jwtKey;
     @Value("${hoidanit.jwt.token-validity-in-seconds}")
-    private String jwtExtention;
+    private long jwtExpiration;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

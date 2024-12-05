@@ -39,17 +39,13 @@ public class FormatRestResponse implements ResponseBodyAdvice {
         int status = httpServletResponse.getStatus();
         RestResponse<Object> res = new RestResponse<Object>();
         // Nếu data là kiểu string thì không thao tác thêm
-        // if (body instanceof String) {
-        // res.setData(body);
-        // res.setMessage("Call api success");
-        // return body;
-        // }
+        if (body instanceof String) {
+            return body;
+        }
         if (status >= 400) {
-            res.setStatusCode(status);
-            res.setError(res.toString());
-            String message = (String) res.getData();
-            res.setData(body);
-            return res;
+            // res.setStatusCode(status);
+            // res.setMessage(body);
+            return body;
         } else {
             res.setStatusCode(status);
             res.setData(body);

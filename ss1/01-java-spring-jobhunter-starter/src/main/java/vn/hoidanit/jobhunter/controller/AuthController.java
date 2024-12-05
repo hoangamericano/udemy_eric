@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import vn.hoidanit.jobhunter.dto.LoginDTO;
+import vn.hoidanit.jobhunter.dto.ResLoginDTO;
 import vn.hoidanit.jobhunter.service.UserService;
 import vn.hoidanit.jobhunter.util.error.SecurityUtil;
 
@@ -29,18 +30,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
-        if (loginDTO.getUsername().isEmpty() && loginDTO.getPassword().isEmpty()
-                || loginDTO.getUsername() != null && loginDTO.getPassword().isEmpty()
-                || loginDTO.getUsername().isEmpty() && loginDTO.getPassword() != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginDTO);
-        }
+    public ResponseEntity<ResLoginDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
+        // Nạp input username/password vào security
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword());
+        // xác thực người dùng => cần viết hàm loadUserByUsername
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        securityUtil.createToken(authentication);
+        String access_token = this.securityUtil.createToken(authentication);
+        ResLoginDTO resLoginDTO = new ResLoginDTO();
+        resLoginDTO.setAccessToken(access_token);
         // User user = this.userService.handleGetUserByUsername(loginDTO.getUsername());
 
-        return ResponseEntity.status(HttpStatus.OK).body(loginDTO);
+        return ResponseEntity.ok().body(resLoginDTO);
     }
 }

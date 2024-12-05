@@ -8,30 +8,41 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityUtil {
-    public static final MacAlgorithm JWT_ALGORITHM = MacAlgorithm.HS512;
+    private final JwtEncoder jwtEncoder;
 
-    public void createToken(Authentication authentication) {
+    public SecurityUtil(JwtEncoder jwtEncoder) {
+        this.jwtEncoder = jwtEncoder;
+    }
+
+    public static final MacAlgorithm JWT_ALGORITHM = MacAlgorithm.HS256;
+    @Value("${hoidanit.jwt.base64-secret}")
+    private String jwtKey;
+    @Value("${hoidanit.jwt.token-validity-in-seconds}")
+    private long jwtExiration;
+
+    public String createToken(Authentication authentication) {
         // TODO Auto-generated method stub
 
-        // Instant now = Instant.now();
-        // Instant validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
+        Instant now = Instant.now();
+        Instant validity = now.plus(this.jwtExiration, ChronoUnit.SECONDS);
 
-//         // @formatter:off
-//         JwtClaimsSet claims = JwtClaimsSet.builder()
-//             .issuedAt(now)
-//             .expiresAt(validity)
-//             .subject(authentication.getName())
-//             .claim(AUTHORITIES_KEY, authorities)
-//             .build();
+        // @formatter:off
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+            .issuedAt(now)
+            .expiresAt(validity)
+            .subject(authentication.getName())
+            .claim("duc", authentication)
+            .build();
 
-//         JwsHeader jwsHeader 
-// = JwsHeader.with(JWT_ALGORITHM).build();
-//         return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
+        JwsHeader jwsHeader 
+= JwsHeader.with(JWT_ALGORITHM).build();
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
 
     }
 
