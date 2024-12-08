@@ -3,9 +3,9 @@ package vn.hoidanit.jobhunter.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginDTO {
-    @NotBlank(message = "Email cannot be blank!")
+    @NotBlank(message = "Email không được để trống!")
     private String username;
-    @NotBlank(message = "Password cannot be blank!")
+    @NotBlank(message = "Password không được để trống!")
     private String password;
 
     public String getUsername() {
