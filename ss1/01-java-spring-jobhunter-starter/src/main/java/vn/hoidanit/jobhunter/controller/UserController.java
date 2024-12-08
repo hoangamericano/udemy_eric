@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-//@RequestMapping("/users")
+// @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -26,7 +26,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/users/")
+    @GetMapping("/users")
     public List<User> getListUser() {
         List<User> uList = userService.getAllUser();
         return uList;

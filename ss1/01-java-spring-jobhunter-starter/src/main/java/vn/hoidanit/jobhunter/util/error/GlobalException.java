@@ -22,7 +22,6 @@ import vn.hoidanit.jobhunter.domain.RestResponse;
 public class GlobalException {
 
     @ExceptionHandler(value = {
-            IdInvalidException.class,
             UserInvalidException.class,
             BadCredentialsException.class
     })
