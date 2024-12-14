@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import vn.hoidanit.jobhunter.domain.RestResponse;
 
 @RestControllerAdvice
-@Order(1)
+// @Order(1)
 public class GlobalException {
 
     @ExceptionHandler(value = {
